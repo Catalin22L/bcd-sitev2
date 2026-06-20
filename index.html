@@ -70,10 +70,8 @@
                 <small>secunde</small>
               </div>
             </div>
-            <!-- [PLACEHOLDER] Înlocuiește href cu link-ul formularului de înscriere -->
-            <a href="https://forms.gle/2wzwWr7SesrKnEbM7" class="btn btn-primary" id="registration-link">Înscrie-te
-              acum!</a>
-            <!-- [PLACEHOLDER] Linkul de înscriere va fi adăugat când îl trimiți -->
+            <!-- Formular de înscriere modal local -->
+            <button class="btn btn-primary" id="registration-link">Înscrie-te acum!</button>
           </div>
           <div class="hero-visual">
             <!-- Eliminat imaginea de fundal din spatele logo-ului BCD -->
@@ -377,6 +375,86 @@
       <p>© 2026 BEST Brașov. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Modal de Înregistrare -->
+  <div id="register-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-content glass-card">
+      <button class="modal-close" aria-label="Închide formularul" id="close-modal-btn">&times;</button>
+      
+      <!-- Starea Formular -->
+      <div id="modal-form-view">
+        <h2 id="modal-title" class="eyebrow" style="margin-bottom: 0.5rem; display: block; font-size: 1rem;">Înscriere Participant</h2>
+        <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem; font-family: var(--font-main);">BEST Company Day 2026</h3>
+        
+        <form id="registration-form">
+          <div class="form-group">
+            <label for="reg-nume">Nume și Prenume</label>
+            <input type="text" id="reg-nume" name="nume" required placeholder="Ex: Popescu Ionuț" autocomplete="name" />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-email">E-mail</label>
+              <input type="email" id="reg-email" name="email" required placeholder="Ex: ionut.popescu@student.unitbv.ro" autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="reg-telefon">Telefon</label>
+              <input type="tel" id="reg-telefon" name="telefon" required placeholder="Ex: 0722123456" autocomplete="tel" />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="reg-facultate">Facultate</label>
+            <select id="reg-facultate" name="facultate" required>
+              <option value="" disabled selected>Alege facultatea...</option>
+              <option value="IESC">Inginerie Electrică și Știința Calculatoarelor (IESC)</option>
+              <option value="MI">Matematică și Informatică (MI)</option>
+              <option value="DPM">Design de Produs și Mediu (DPM)</option>
+              <option value="Mecanica">Inginerie Mecanică</option>
+              <option value="ITMI">Inginerie Tehnologică și Management Industrial (ITMI)</option>
+              <option value="Constructii">Construcții</option>
+              <option value="Altele">Altă facultate / Universitate</option>
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="reg-an">An de Studiu</label>
+              <select id="reg-an" name="an_studiu" required>
+                <option value="" disabled selected>Alege anul...</option>
+                <option value="Anul I">Anul I</option>
+                <option value="Anul II">Anul II</option>
+                <option value="Anul III">Anul III</option>
+                <option value="Anul IV">Anul IV</option>
+                <option value="Master I">Master I</option>
+                <option value="Master II">Master II</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reg-specializare">Specializare</label>
+              <input type="text" id="reg-specializare" name="specializare" required placeholder="Ex: Tehnologia Informației / AIA" />
+            </div>
+          </div>
+          
+          <div class="form-error" id="form-error-msg" style="display: none;"></div>
+          
+          <button type="submit" class="btn btn-primary btn-submit-form" id="submit-btn">
+            Trimite Înscrierea
+          </button>
+        </form>
+      </div>
+      
+      <!-- Starea Succes -->
+      <div id="modal-success-view" style="display: none; text-align: center; padding: 2rem 1rem;">
+        <div class="success-icon" style="font-size: 4rem; color: var(--color-accent); margin-bottom: 1.5rem; line-height: 1;">✓</div>
+        <h2 style="font-size: 2.2rem; font-family: var(--font-main); margin-bottom: 1rem; color: var(--color-accent);">Te-ai înscris cu succes!</h2>
+        <p style="color: var(--color-muted); margin-bottom: 2rem; max-width: 400px; margin-inline: auto;">
+          Îți mulțumim pentru înregistrare. Datele tale au fost salvate în baza de date locală. Te așteptăm la eveniment!
+        </p>
+        <button class="btn btn-primary" id="success-close-btn" style="margin-top: 0;">Închide</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

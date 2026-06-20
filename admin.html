@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - BEST Company Day 2026</title>
+  <link rel="icon" type="image/png" href="assets/logos/BEST_horizontal_signature_white.png" />
+  <link rel="stylesheet" href="admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- Container Principal -->
+  <div class="admin-container">
+    
+    <!-- 1. Secțiune Login -->
+    <div id="admin-login-view" class="login-wrapper">
+      <div class="login-card glass-card">
+        <div class="login-header">
+          <img src="assets/logos/bright/brighter_best-brasov-logo-clean.png" alt="BEST Logo" class="login-logo">
+          <h2>Panou Administrare</h2>
+          <p>Introduceți parola pentru a accesa datele de înscriere</p>
+        </div>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="admin-password">Parolă Administrator</label>
+            <input type="password" id="admin-password" required placeholder="Introduceți parola..." autocomplete="current-password">
+          </div>
+          <div id="login-error-msg" class="login-error" style="display: none;"></div>
+          <button type="submit" class="btn-admin btn-admin-primary">Autentificare</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. Secțiune Dashboard (Ascunsă inițial) -->
+    <div id="admin-dashboard-view" class="dashboard-wrapper" style="display: none;">
+      
+      <!-- Antet Dashboard -->
+      <header class="dashboard-header">
+        <div class="header-title">
+          <span class="eyebrow">Administrare Eveniment</span>
+          <h1>BEST Company Day 2026</h1>
+        </div>
+        <div class="header-actions">
+          <button id="logout-btn" class="btn-admin btn-admin-secondary">Deconectare</button>
+        </div>
+      </header>
+
+      <!-- Grid Statistici Rapide -->
+      <section class="stats-row">
+        <div class="stat-box glass-card">
+          <div class="stat-info">
+            <h3>Total Înscrieri</h3>
+            <p id="stat-total" class="stat-number">0</p>
+          </div>
+          <div class="stat-icon">👥</div>
+        </div>
+        <div class="stat-box glass-card">
+          <div class="stat-info">
+            <h3>Înscrieri Astăzi</h3>
+            <p id="stat-today" class="stat-number">0</p>
+          </div>
+          <div class="stat-icon">📅</div>
+        </div>
+      </section>
+
+      <!-- Secțiune Repartizare Vizuală (Grafice) -->
+      <section class="charts-row">
+        <!-- Facultăți -->
+        <div class="chart-box glass-card">
+          <h2>Distribuție pe Facultăți</h2>
+          <div id="faculties-chart-container" class="bars-container">
+            <p class="no-data">Nicio înscriere înregistrată încă.</p>
+          </div>
+        </div>
+
+        <!-- Ani de studiu -->
+        <div class="chart-box glass-card">
+          <h2>Distribuție pe Ani de Studiu</h2>
+          <div id="years-chart-container" class="bars-container">
+            <p class="no-data">Nicio înscriere înregistrată încă.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabelul cu Date -->
+      <section class="table-section glass-card">
+        <div class="table-controls">
+          <h2>Listă Participanți</h2>
+          
+          <div class="controls-actions">
+            <!-- Search bar -->
+            <div class="search-wrapper">
+              <input type="text" id="search-input" placeholder="Caută după nume, email, specializare...">
+            </div>
+            
+            <!-- Export CSV -->
+            <button id="export-csv-btn" class="btn-admin btn-admin-success">
+              Exportă Excel (CSV)
+            </button>
+          </div>
+        </div>
+
+        <!-- Înveliș Tabel pentru scroll pe mobil -->
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Nume & Prenume</th>
+                <th>E-mail</th>
+                <th>Telefon</th>
+                <th>Facultate</th>
+                <th>An Studiu</th>
+                <th>Specializare</th>
+                <th>Dată Înscriere</th>
+                <th>Acțiuni</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr>
+                <td colspan="8" class="loading-td">Se încarcă datele...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="no-results-msg" class="no-results" style="display: none;">
+          Niciun rezultat găsit pentru filtrele introduse.
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

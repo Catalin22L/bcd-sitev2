@@ -150,6 +150,117 @@ function setupHeroParallax() {
   );
 }
 
+function setupRegistrationModal() {
+  const openBtn = document.getElementById("registration-link");
+  const modal = document.getElementById("register-modal");
+  const closeBtn = document.getElementById("close-modal-btn");
+  const successCloseBtn = document.getElementById("success-close-btn");
+  const form = document.getElementById("registration-form");
+  const formView = document.getElementById("modal-form-view");
+  const successView = document.getElementById("modal-success-view");
+  const errorMsg = document.getElementById("form-error-msg");
+  const submitBtn = document.getElementById("submit-btn");
+
+  if (!openBtn || !modal) return;
+
+  const openModal = () => {
+    // Reset views
+    formView.style.display = "block";
+    successView.style.display = "none";
+    errorMsg.style.display = "none";
+    if (form) form.reset();
+    
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden"; // Block page scroll
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = ""; // Re-enable scroll
+  };
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  successCloseBtn.addEventListener("click", closeModal);
+
+  // Close on clicking overlay background
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Handle Form Submit
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      // Hide previous errors
+      errorMsg.style.display = "none";
+      errorMsg.textContent = "";
+
+      // Gather form data
+      const formData = {
+        nume: document.getElementById("reg-nume").value.trim(),
+        email: document.getElementById("reg-email").value.trim(),
+        telefon: document.getElementById("reg-telefon").value.trim(),
+        facultate: document.getElementById("reg-facultate").value,
+        an_studiu: document.getElementById("reg-an").value,
+        specializare: document.getElementById("reg-specializare").value.trim(),
+      };
+
+      // Button loading state
+      submitBtn.disabled = true;
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.innerHTML = `
+        <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="animation: spin 1s linear infinite; margin-right: 8px;">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="40 20" stroke-dashoffset="0"></circle>
+        </svg> Trimitem...
+      `;
+
+      try {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "A apărut o eroare la trimiterea datelor.");
+        }
+
+        // Success state
+        formView.style.display = "none";
+        successView.style.display = "block";
+      } catch (error) {
+        // Error state
+        errorMsg.textContent = error.message;
+        errorMsg.style.display = "block";
+      } finally {
+        // Restore button state
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
+    });
+  }
+}
+
+// Inject spin keyframes style in doc for submit spinner
+const spinStyle = document.createElement("style");
+spinStyle.innerHTML = `
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+document.head.appendChild(spinStyle);
+
 function init() {
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -157,6 +268,7 @@ function init() {
   setupActiveSectionHighlight();
   setupMobileMenu();
   setupHeroParallax();
+  setupRegistrationModal();
 }
 
 document.addEventListener("DOMContentLoaded", init);
